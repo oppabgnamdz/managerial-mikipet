@@ -1,0 +1,44 @@
+.login-page {
+  background: rgb(60, 242, 88);
+  background: linear-gradient(
+    90deg,
+    rgba(60, 242, 88, 0.8449754901960784) 0%,
+    rgba(20, 216, 233, 1) 49%,
+    rgba(0, 212, 255, 1) 100%
+  );
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .form {
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+      rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    width: 500px;
+    height: 500px;
+    background-color: white;
+    border-radius: 1rem;
+    h1 {
+      text-align: center;
+    }
+    .login-account,
+    .login-password {
+      display: flex;
+      align-items: center;
+      padding: 0.5rem 2.5rem;
+      flex-direction: column;
+      label {
+        align-self: flex-start;
+      }
+      #account {
+        width: 100%;
+        padding: 12px 20px;
+        display: inline-block;
+        margin: 10px 0px !important;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        margin-left: 1rem;
+      }
+    }
+  }
+}
