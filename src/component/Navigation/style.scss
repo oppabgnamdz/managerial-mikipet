@@ -1,0 +1,38 @@
+.nav {
+  background-color: #ff9b7b;
+  height: 100vh;
+  .intro {
+    padding: 1rem 3rem;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    img {
+      width: 120px;
+      height: 120px;
+    }
+    &-name {
+      font-size: 2rem;
+    }
+  }
+  .navigate {
+    &-home {
+      a {
+        display: flex;
+        padding: 0.5rem 3rem;
+        color: white;
+        text-decoration: none;
+        font-size: 1.5rem;
+        align-items: center;
+        .navigate-home-span {
+          margin-left: 2rem;
+        }
+        &:hover {
+          background-color: white;
+          color: #fc9e78;
+          transition: 0.4s;
+        }
+      }
+    }
+  }
+}
