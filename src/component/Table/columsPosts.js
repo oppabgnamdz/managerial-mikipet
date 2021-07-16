@@ -31,4 +31,8 @@ export const COLUMNSPOSTS = [
     Header: 'Content',
     accessor: 'textDescription',
   },
+  {
+    Header: 'Owner Post',
+    accessor: 'ownerId',
+  },
 ];

@@ -37,17 +37,21 @@ export default function Index() {
           </a>
         </div>
         <div className="navigate-home">
-          <a href="#">
-            <FaUserTimes />
-            <span className="navigate-home-span">Người dùng báo cáo</span>
-          </a>
-        </div>
-        <div className="navigate-home">
-          <a href="#">
+          <a
+            onClick={() => {
+              dispatch({ type: 'GET_POSTS_REPORTED' });
+            }}
+          >
             <GoReport />
             <span className="navigate-home-span">Bài viết báo cáo</span>
           </a>
         </div>
+        {/* <div className="navigate-home">
+          <a>
+            <FaUserTimes />
+            <span className="navigate-home-span">Người dùng báo cáo</span>
+          </a>
+        </div> */}
       </div>
     </div>
   );

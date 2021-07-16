@@ -32,7 +32,7 @@ export default function Index() {
     <div
       style={{
         overflowY: 'scroll',
-        height: '70vh',
+        height: '60vh',
         position: 'relative',
       }}
     >
