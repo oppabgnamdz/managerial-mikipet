@@ -3,8 +3,8 @@ import Navigation from '../Navigation';
 import Header from '../Header';
 import Table from '../Table';
 import { useSelector } from 'react-redux';
-import { urlUsers } from '../../constant';
 import { checkURL } from '../../hooks';
+import './style.scss';
 export default function Index() {
   const urlFetch = useSelector((state) => state.goTable);
   console.log(urlFetch);

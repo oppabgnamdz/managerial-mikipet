@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
-import { useTable, useSortBy } from 'react-table';
+import { useTable, useSortBy, useGlobalFilter } from 'react-table';
 import { COLUMNS } from './columnsUsers';
 import { COLUMNSPOSTS } from './columsPosts';
 import { useSelector } from 'react-redux';
 import './table.scss';
 import { urlUsers } from '../../constant';
+import Search from '../Search';
 export default function Index() {
   const [data, setData] = useState([]);
   const urlFetch = useSelector((state) => state.goTable);
@@ -20,14 +21,23 @@ export default function Index() {
     };
     fetchDataUser();
   }, [urlFetch]);
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable(
-      {
-        columns: compare,
-        data,
-      },
-      useSortBy
-    );
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    rows,
+    prepareRow,
+    state,
+    setGlobalFilter,
+  } = useTable(
+    {
+      columns: compare,
+      data,
+    },
+    useGlobalFilter,
+    useSortBy
+  );
+  const { globalFilter } = state;
   return (
     <div
       style={{
@@ -36,6 +46,7 @@ export default function Index() {
         position: 'relative',
       }}
     >
+      <Search filter={globalFilter} setFilter={setGlobalFilter} />
       <table {...getTableProps()}>
         <thead>
           {headerGroups.map((headerGroup) => (
