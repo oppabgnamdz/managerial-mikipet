@@ -4,15 +4,16 @@ import { IoDocuments } from 'react-icons/io5';
 import { FaUserTimes } from 'react-icons/fa';
 import { GoReport } from 'react-icons/go';
 import { IoLogOut } from 'react-icons/io5';
+import { Link } from 'react-router-dom';
 import './style.scss';
 export default function Header() {
   return (
     <div className="header">
       <div className="header__statistic">
         <h1>Thống Kê</h1>
-        <a href="#">
+        <Link to="/" className="header__statistic-link" href="#">
           <IoLogOut className="icon-log-out" />
-        </a>
+        </Link>
       </div>
       <div className="header__route">
         <a href="#" className="header__route-flex">
