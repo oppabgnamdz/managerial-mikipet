@@ -22,5 +22,5 @@ export const COLUMNS = [
   {
     Header: 'Display Name',
     accessor: 'displayName',
-  }
+  },
 ];

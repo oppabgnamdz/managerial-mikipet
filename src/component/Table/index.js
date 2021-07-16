@@ -1,14 +1,17 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
 import { useTable, useSortBy } from 'react-table';
-import { COLUMNS } from './columns';
+import { COLUMNS } from './columnsUsers';
+import { COLUMNSPOSTS } from './columsPosts';
 import { useSelector } from 'react-redux';
 import './table.scss';
+import { urlUsers } from '../../constant';
 export default function Index() {
   const [data, setData] = useState([]);
   const urlFetch = useSelector((state) => state.goTable);
-  console.log(urlFetch, 'url fetch');
   const columns = useMemo(() => COLUMNS, []);
+  const columnsPosts = useMemo(() => COLUMNSPOSTS, []);
+  const compare = urlFetch === urlUsers ? columns : columnsPosts;
   useEffect(() => {
     const fetchDataUser = async () => {
       const response = await axios.get(urlFetch);
@@ -20,7 +23,7 @@ export default function Index() {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable(
       {
-        columns,
+        columns: compare,
         data,
       },
       useSortBy
