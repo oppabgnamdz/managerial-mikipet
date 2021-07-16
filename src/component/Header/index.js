@@ -1,12 +1,29 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { TiGroup } from 'react-icons/ti';
 import { IoDocuments } from 'react-icons/io5';
 import { FaUserTimes } from 'react-icons/fa';
 import { GoReport } from 'react-icons/go';
 import { IoLogOut } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 import './style.scss';
+import { urlPosts, urlUsers } from '../../constant';
+import { useDispatch } from 'react-redux';
 export default function Header() {
+  const [users, setUsers] = useState();
+  const [postes, setPostes] = useState();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const fetchDataUser = async () => {
+      const promise1 = axios.get(urlUsers);
+      const promise2 = axios.get(urlPosts);
+      Promise.all([promise1, promise2]).then(function (values) {
+        setUsers(values[0].data.length);
+        setPostes(values[1].data.length);
+      });
+    };
+    fetchDataUser();
+  }, []);
   return (
     <div className="header">
       <div className="header__statistic">
@@ -16,22 +33,32 @@ export default function Header() {
         </Link>
       </div>
       <div className="header__route">
-        <a href="#" className="header__route-flex">
+        <a
+          onClick={() => {
+            dispatch({ type: 'GET_USERS' });
+          }}
+          className="header__route-flex"
+        >
           <TiGroup className="header__route-flex-icon users" />
           <div className="header__route-flex-text">
             <span lassName="header__route-flex-text-title">
               Số lượng người dùng
             </span>
-            <span className="header__route-flex-text-number">99</span>
+            <span className="header__route-flex-text-number">{users}</span>
           </div>
         </a>
-        <a href="#" className="header__route-flex">
+        <a
+          onClick={() => {
+            dispatch({ type: 'GET_POSTS' });
+          }}
+          className="header__route-flex"
+        >
           <IoDocuments className="header__route-flex-icon posts" />
           <div className="header__route-flex-text">
             <span lassName="header__route-flex-text-title">
               Số lượng bài viết
             </span>
-            <span className="header__route-flex-text-number">250</span>
+            <span className="header__route-flex-text-number">{postes}</span>
           </div>
         </a>
         <a href="#" className="header__route-flex">

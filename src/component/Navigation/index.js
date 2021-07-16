@@ -5,7 +5,9 @@ import { IoHome } from 'react-icons/io5';
 import { IoDocuments } from 'react-icons/io5';
 import { FaUserTimes } from 'react-icons/fa';
 import { GoReport } from 'react-icons/go';
-export default function index() {
+import { useDispatch } from 'react-redux';
+export default function Index() {
+  const dispatch = useDispatch();
   return (
     <div className="nav">
       <div className="intro">
@@ -15,13 +17,21 @@ export default function index() {
       </div>
       <div className="navigate">
         <div className="navigate-home">
-          <a href="#">
+          <a
+            onClick={() => {
+              dispatch({ type: 'GET_USERS' });
+            }}
+          >
             <IoHome />
             <span className="navigate-home-span">Trang chủ</span>
           </a>
         </div>
         <div className="navigate-home">
-          <a href="#">
+          <a
+            onClick={() => {
+              dispatch({ type: 'GET_POSTS' });
+            }}
+          >
             <IoDocuments />
             <span className="navigate-home-span">Số lượng bài viết</span>
           </a>
