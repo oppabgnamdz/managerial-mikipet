@@ -11,7 +11,7 @@ export default function index() {
       <div className="intro">
         <img src={logo} alt="Logo" />
         <span className="intro-name">Miki</span>
-        <span>Tận hưởng thế giới thú cưng của bạn</span>
+        <span>Tận hưởng thế giới thú cưng của bạn </span>
       </div>
       <div className="navigate">
         <div className="navigate-home">
