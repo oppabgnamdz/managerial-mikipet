@@ -20,6 +20,7 @@ export default function Index() {
           <a
             onClick={() => {
               dispatch({ type: 'GET_USERS' });
+              dispatch({ type: 'LOADING' });
             }}
           >
             <IoHome />
@@ -30,6 +31,7 @@ export default function Index() {
           <a
             onClick={() => {
               dispatch({ type: 'GET_POSTS' });
+              dispatch({ type: 'LOADING' });
             }}
           >
             <IoDocuments />
@@ -40,6 +42,7 @@ export default function Index() {
           <a
             onClick={() => {
               dispatch({ type: 'GET_POSTS_REPORTED' });
+              dispatch({ type: 'LOADING' });
             }}
           >
             <GoReport />

@@ -50,6 +50,7 @@ export default function Header() {
         <a
           onClick={() => {
             dispatch({ type: 'GET_USERS' });
+            dispatch({ type: 'LOADING' });
           }}
           className="header__route-flex"
         >
@@ -64,6 +65,7 @@ export default function Header() {
         <a
           onClick={() => {
             dispatch({ type: 'GET_POSTS' });
+            dispatch({ type: 'LOADING' });
           }}
           className="header__route-flex"
         >
@@ -78,6 +80,7 @@ export default function Header() {
         <a
           onClick={() => {
             dispatch({ type: 'GET_POSTS_REPORTED' });
+            dispatch({ type: 'LOADING' });
           }}
           className="header__route-flex"
         >

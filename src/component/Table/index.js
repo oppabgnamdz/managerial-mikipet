@@ -19,6 +19,8 @@ import {
 } from '../../constant';
 import Search from '../Search';
 import Modal from 'react-modal';
+import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
+import Loader from 'react-loader-spinner';
 const customStyles = {
   content: {
     top: '50%',
@@ -39,6 +41,8 @@ export default function Index() {
 
   const dispatch = useDispatch();
   const urlFetch = useSelector((state) => state.goTable);
+  const loading = useSelector((state) => state.loading);
+  console.log('loading', loading);
   const reRender = useSelector((state) => state.reRender);
 
   const columns = useMemo(() => COLUMNS, []);
@@ -50,6 +54,7 @@ export default function Index() {
       const response = await axios.get(urlFetch);
       if (!response) return;
       setData(response.data);
+      dispatch({ type: 'FINISH' });
     };
     fetchDataUser();
   }, [urlFetch, reRender]);
@@ -95,6 +100,7 @@ export default function Index() {
     const response = await axios.post(urlDeletePost, { id: idPostDelete });
     if (response.status === 200) {
       dispatch({ type: 'RE_RENDER' });
+      dispatch({ type: 'LOADING' });
     }
     closeModal();
   };
@@ -102,6 +108,7 @@ export default function Index() {
     const response = await axios.post(urlChangeStatusAccount, { account });
     if (response.status === 200) {
       dispatch({ type: 'RE_RENDER' });
+      dispatch({ type: 'LOADING' });
     }
     closeModal();
   };
@@ -131,46 +138,58 @@ export default function Index() {
           position: 'relative',
         }}
       >
-        <table {...getTableProps()}>
-          <thead>
-            {headerGroups.map((headerGroup) => (
-              <tr {...headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map((column) => (
-                  <th {...column.getHeaderProps(column.getSortByToggleProps())}>
-                    {column.render('Header')}
-                    <span>
-                      {column.isSorted
-                        ? column.isSortedDesc
-                          ? ' 🔽'
-                          : ' 🔼'
-                        : ''}
-                    </span>
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </thead>
-          <tbody {...getTableBodyProps()}>
-            {page.map((row) => {
-              prepareRow(row);
-              return (
-                <tr
-                  style={{ cursor: 'pointer' }}
-                  onClick={() => {
-                    rowClick(row);
-                  }}
-                  {...row.getRowProps()}
-                >
-                  {row.cells.map((cell) => {
-                    return (
-                      <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                    );
-                  })}
+        {!loading ? (
+          <table {...getTableProps()}>
+            <thead>
+              {headerGroups.map((headerGroup) => (
+                <tr {...headerGroup.getHeaderGroupProps()}>
+                  {headerGroup.headers.map((column) => (
+                    <th
+                      {...column.getHeaderProps(column.getSortByToggleProps())}
+                    >
+                      {column.render('Header')}
+                      <span>
+                        {column.isSorted
+                          ? column.isSortedDesc
+                            ? ' 🔽'
+                            : ' 🔼'
+                          : ''}
+                      </span>
+                    </th>
+                  ))}
                 </tr>
-              );
-            })}
-          </tbody>
-        </table>
+              ))}
+            </thead>
+            <tbody {...getTableBodyProps()}>
+              {page.map((row) => {
+                prepareRow(row);
+                return (
+                  <tr
+                    style={{ cursor: 'pointer' }}
+                    onClick={() => {
+                      rowClick(row);
+                    }}
+                    {...row.getRowProps()}
+                  >
+                    {row.cells.map((cell) => {
+                      return (
+                        <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                      );
+                    })}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        ) : (
+          <Loader
+            type="Puff"
+            color="#00BFFF"
+            height={100}
+            width={100}
+            timeout={3000} //3 secs
+          />
+        )}
       </div>
       <div>
         <span style={{ paddingRight: 10 }}>
