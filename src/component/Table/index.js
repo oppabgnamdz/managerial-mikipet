@@ -55,7 +55,6 @@ export default function Index() {
       dispatch({ type: 'FINISH' });
     };
     fetchDataUser();
-   
   }, [reRender]);
   const {
     getTableProps,
@@ -118,6 +117,7 @@ export default function Index() {
     if (urlFetch === urlUsers) {
       openModal(row.cells);
     } else if (urlFetch === urlPosts) {
+      window.open(row.cells[6].value);
     } else {
       openModal(row.cells);
     }
