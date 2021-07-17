@@ -42,7 +42,6 @@ export default function Index() {
   const dispatch = useDispatch();
   const urlFetch = useSelector((state) => state.goTable);
   const loading = useSelector((state) => state.loading);
-  console.log('loading', loading);
   const reRender = useSelector((state) => state.reRender);
 
   const columns = useMemo(() => COLUMNS, []);
@@ -50,14 +49,14 @@ export default function Index() {
   const compare = urlFetch === urlUsers ? columns : columnsPosts;
   useEffect(() => {
     const fetchDataUser = async () => {
-      console.log('fetch useEffect');
       const response = await axios.get(urlFetch);
       if (!response) return;
       setData(response.data);
       dispatch({ type: 'FINISH' });
     };
     fetchDataUser();
-  }, [urlFetch, reRender]);
+   
+  }, [reRender]);
   const {
     getTableProps,
     getTableBodyProps,
@@ -119,10 +118,7 @@ export default function Index() {
     if (urlFetch === urlUsers) {
       openModal(row.cells);
     } else if (urlFetch === urlPosts) {
-      console.log(row.cells[6].value);
-      window.open(row.cells[6].value);
     } else {
-      console.log('???');
       openModal(row.cells);
     }
   };

@@ -1,5 +1,4 @@
-import { useSelector } from 'react-redux';
-import { urlAllRoom, urlPosts, urlPostsReported, urlUsers } from '../constant';
+import {  urlPosts, urlPostsReported, urlUsers } from '../constant';
 export const checkURL = (urlFetch) => {
   switch (urlFetch) {
     case urlUsers:

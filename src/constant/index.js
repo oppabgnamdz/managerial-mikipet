@@ -1,9 +1,10 @@
-const urlUsers = 'https://obnd-miki.herokuapp.com/admin-get-all-users';
-const urlPosts = 'https://obnd-miki.herokuapp.com/post-api/admin-get-all-posts';
-const urlPostsReported = 'https://obnd-miki.herokuapp.com/post-api/get-report';
-const urlAllRoom = 'https://obnd-miki.herokuapp.com/get-all-rooms';
-const urlChangeStatusAccount = `https://obnd-miki.herokuapp.com/admin-update-account`;
-const urlDeletePost = `https://obnd-miki.herokuapp.com/post-api/delete-post`;
+const rootURL = `https://obnd-miki.herokuapp.com`;
+const urlUsers = `${rootURL}/admin-get-all-users`;
+const urlPosts = `${rootURL}/post-api/admin-get-all-posts`;
+const urlPostsReported = `${rootURL}/post-api/get-report`;
+const urlAllRoom = `${rootURL}/get-all-rooms`;
+const urlChangeStatusAccount = `${rootURL}/admin-update-account`;
+const urlDeletePost = `${rootURL}/post-api/delete-post`;
 export {
   urlUsers,
   urlPosts,
