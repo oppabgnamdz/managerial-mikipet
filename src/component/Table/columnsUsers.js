@@ -23,4 +23,8 @@ export const COLUMNS = [
     Header: 'Display Name',
     accessor: 'displayName',
   },
+  {
+    Header: 'Active',
+    accessor: (d) => (d.active ? 'active' : 'locked'),
+  },
 ];

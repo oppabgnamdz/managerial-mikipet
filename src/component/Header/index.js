@@ -92,7 +92,7 @@ export default function Header() {
           <FaUserTimes className="header__route-flex-icon post-report" />
           <div className="header__route-flex-text">
             <span className="header__route-flex-text-title">
-              Tổng cuộc chat
+              Tổng phòng chat
             </span>
             <span className="header__route-flex-text-number">{rooms}</span>
           </div>

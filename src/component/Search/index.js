@@ -6,13 +6,13 @@ export default function Index({ filter, setFilter }) {
       <div class="form__group field">
         <input
           type="input"
-          class="form__field"
+          className="form__field"
           value={filter || ''}
           name="name"
           id="name"
           onChange={(e) => {
             setFilter(e.target.value);
-          }}    
+          }}
           required
         />
         <label for="name" class="form__label">

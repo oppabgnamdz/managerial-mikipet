@@ -5,19 +5,19 @@ export const COLUMNSPOSTS = [
   },
   {
     Header: 'Tags',
-    accessor: 'tags',
+    accessor: (d) => (d.tags ? d.tags.toString() : 'undefined'),
   },
   {
     Header: 'Liked',
-    accessor: 'liked',
+    accessor: (d) => (d.liked ? d.liked.length : 'undefined'),
   },
   {
     Header: 'Reported',
-    accessor: 'reported',
+    accessor: (d) => (d.reported ? d.reported.length : 'undefined'),
   },
   {
     Header: 'Comments',
-    accessor: 'comments',
+    accessor: (d) => (d.comments ? d.comments.length : 'undefined'),
   },
   {
     Header: 'Create At',
@@ -33,6 +33,6 @@ export const COLUMNSPOSTS = [
   },
   {
     Header: 'Owner Post',
-    accessor: 'ownerId',
+    accessor: (d) => (d.ownerId ? d.ownerId.account : 'undefined'),
   },
 ];

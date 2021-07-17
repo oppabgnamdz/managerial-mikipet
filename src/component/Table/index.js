@@ -10,22 +10,39 @@ import { COLUMNS } from './columnsUsers';
 import { COLUMNSPOSTS } from './columsPosts';
 import { useSelector } from 'react-redux';
 import './table.scss';
-import { urlUsers } from '../../constant';
+import { urlChangeStatusAccount, urlPosts, urlUsers } from '../../constant';
 import Search from '../Search';
+import Modal from 'react-modal';
+const customStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+  },
+};
+Modal.setAppElement(document.getElementById('root'));
 export default function Index() {
   const [data, setData] = useState([]);
+  const [modalIsOpen, setIsOpen] = useState(false);
+  const [active, setActive] = useState('undefined');
+  const [account, setAccount] = useState();
+  const [reRender, setReRender] = useState(false);
   const urlFetch = useSelector((state) => state.goTable);
   const columns = useMemo(() => COLUMNS, []);
   const columnsPosts = useMemo(() => COLUMNSPOSTS, []);
   const compare = urlFetch === urlUsers ? columns : columnsPosts;
   useEffect(() => {
     const fetchDataUser = async () => {
+      console.log('fetch useEffect');
       const response = await axios.get(urlFetch);
       if (!response) return;
       setData(response.data);
     };
     fetchDataUser();
-  }, [urlFetch]);
+  }, [urlFetch, reRender]);
   const {
     getTableProps,
     getTableBodyProps,
@@ -49,6 +66,35 @@ export default function Index() {
     useSortBy,
     usePagination
   );
+  function openModal(value) {
+    if (urlFetch === urlUsers) {
+      setIsOpen(true);
+      setActive(value[6].value);
+      setAccount(value[1].value);
+    }
+  }
+  function afterOpenModal(e) {
+    // references are now sync'd and can be accessed.
+  }
+  const updateStatusUser = async () => {
+    const response = await axios.post(urlChangeStatusAccount, { account });
+    if (response.status === 200) {
+      setReRender(!reRender);
+    }
+    closeModal();
+  };
+  async function closeModal() {
+    setIsOpen(false);
+  }
+  const rowClick = (row) => {
+    if (urlFetch === urlUsers) {
+      openModal(row.cells);
+    } else if (urlFetch === urlPosts) {
+      console.log(row.cells[6].value);
+      window.open(row.cells[6].value);
+    }
+  };
+
   const { globalFilter, pageIndex } = state;
   return (
     <div>
@@ -83,7 +129,13 @@ export default function Index() {
             {page.map((row) => {
               prepareRow(row);
               return (
-                <tr {...row.getRowProps()}>
+                <tr
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => {
+                    rowClick(row);
+                  }}
+                  {...row.getRowProps()}
+                >
                   {row.cells.map((cell) => {
                     return (
                       <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
@@ -109,6 +161,26 @@ export default function Index() {
           Next
         </button>
       </div>
+      <Modal
+        isOpen={modalIsOpen}
+        onAfterOpen={afterOpenModal}
+        onRequestClose={closeModal}
+        style={customStyles}
+        contentLabel="Example Modal"
+      >
+        {urlFetch === urlUsers && (
+          <div>
+            <h2>Hello</h2>
+            <h2>
+              Account is <strong style={{ color: 'red' }}>{active}</strong>
+            </h2>
+            <p>Do you want to change the status of this account ? </p>
+            <div className="change-status">
+              <button onClick={updateStatusUser}>Click Hear</button>
+            </div>
+          </div>
+        )}
+      </Modal>
     </div>
   );
 }
