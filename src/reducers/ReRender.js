@@ -3,7 +3,7 @@ export default function ReRender(state = true, action) {
     case 'RE_RENDER': {
       return !state;
     }
-    default:
+    default: 
       return state;
   }
 }
