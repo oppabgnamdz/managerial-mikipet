@@ -183,7 +183,7 @@ export default function Index() {
           </table>
         ) : (
           <Loader
-            type="Puff"
+            type="BallTriangle"
             color="#00BFFF"
             height={100}
             width={100}
