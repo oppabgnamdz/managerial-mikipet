@@ -8,9 +8,15 @@ import {
 } from 'react-table';
 import { COLUMNS } from './columnsUsers';
 import { COLUMNSPOSTS } from './columsPosts';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import './table.scss';
-import { urlChangeStatusAccount, urlPosts, urlUsers } from '../../constant';
+import {
+  urlChangeStatusAccount,
+  urlDeletePost,
+  urlPosts,
+  urlPostsReported,
+  urlUsers,
+} from '../../constant';
 import Search from '../Search';
 import Modal from 'react-modal';
 const customStyles = {
@@ -29,8 +35,12 @@ export default function Index() {
   const [modalIsOpen, setIsOpen] = useState(false);
   const [active, setActive] = useState('undefined');
   const [account, setAccount] = useState();
-  const [reRender, setReRender] = useState(false);
+  const [idPostDelete, setIdPostDelete] = useState('');
+
+  const dispatch = useDispatch();
   const urlFetch = useSelector((state) => state.goTable);
+  const reRender = useSelector((state) => state.reRender);
+
   const columns = useMemo(() => COLUMNS, []);
   const columnsPosts = useMemo(() => COLUMNSPOSTS, []);
   const compare = urlFetch === urlUsers ? columns : columnsPosts;
@@ -71,15 +81,27 @@ export default function Index() {
       setIsOpen(true);
       setActive(value[6].value);
       setAccount(value[1].value);
+      return;
+    }
+    if (urlFetch === urlPostsReported) {
+      setIsOpen(true);
+      setIdPostDelete(value[0].value);
     }
   }
   function afterOpenModal(e) {
     // references are now sync'd and can be accessed.
   }
+  const deletePostReport = async () => {
+    const response = await axios.post(urlDeletePost, { id: idPostDelete });
+    if (response.status === 200) {
+      dispatch({ type: 'RE_RENDER' });
+    }
+    closeModal();
+  };
   const updateStatusUser = async () => {
     const response = await axios.post(urlChangeStatusAccount, { account });
     if (response.status === 200) {
-      setReRender(!reRender);
+      dispatch({ type: 'RE_RENDER' });
     }
     closeModal();
   };
@@ -92,6 +114,9 @@ export default function Index() {
     } else if (urlFetch === urlPosts) {
       console.log(row.cells[6].value);
       window.open(row.cells[6].value);
+    } else {
+      console.log('???');
+      openModal(row.cells);
     }
   };
 
@@ -176,7 +201,16 @@ export default function Index() {
             </h2>
             <p>Do you want to change the status of this account ? </p>
             <div className="change-status">
-              <button onClick={updateStatusUser}>Click Hear</button>
+              <button onClick={updateStatusUser}>Update</button>
+            </div>
+          </div>
+        )}
+        {urlFetch === urlPostsReported && (
+          <div>
+            <h2>Hello</h2>
+            <p>Do you want to delete this post ? </p>
+            <div className="change-status">
+              <button onClick={deletePostReport}>Delete Post</button>
             </div>
           </div>
         )}

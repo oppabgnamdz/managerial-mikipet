@@ -13,13 +13,14 @@ import {
   urlPostsReported,
   urlUsers,
 } from '../../constant';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 export default function Header() {
   const [users, setUsers] = useState();
   const [postes, setPostes] = useState();
   const [report, setReport] = useState();
   const [rooms, setRooms] = useState();
   const dispatch = useDispatch();
+  const reRender = useSelector((state) => state.reRender);
   useEffect(() => {
     const fetchDataUser = async () => {
       const promise1 = axios.get(urlUsers);
@@ -36,7 +37,7 @@ export default function Header() {
       });
     };
     fetchDataUser();
-  }, []);
+  }, [reRender]);
   return (
     <div className="header">
       <div className="header__statistic">
