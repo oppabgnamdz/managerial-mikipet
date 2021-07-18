@@ -5,9 +5,10 @@ import { IoHome } from 'react-icons/io5';
 import { IoDocuments } from 'react-icons/io5';
 import { FaUserTimes } from 'react-icons/fa';
 import { GoReport } from 'react-icons/go';
-import { useDispatch } from 'react-redux';
+import { useDispatch,useSelector } from 'react-redux';
 export default function Index() {
   const dispatch = useDispatch();
+  const loading = useSelector((state) => state.loading);
   return (
     <div className="nav">
       <div className="intro">
@@ -19,9 +20,12 @@ export default function Index() {
         <div className="navigate-home">
           <a
             onClick={() => {
-              dispatch({ type: 'GET_USERS' });
-              dispatch({ type: 'RE_RENDER' });
-              dispatch({ type: 'LOADING' });
+              if (!loading) {
+                dispatch({ type: 'GET_USERS' });
+                dispatch({ type: 'RE_RENDER' });
+                dispatch({ type: 'LOADING' });
+                return;
+              }
             }}
           >
             <IoHome />
@@ -31,9 +35,12 @@ export default function Index() {
         <div className="navigate-home">
           <a
             onClick={() => {
-              dispatch({ type: 'GET_POSTS' });
-              dispatch({ type: 'RE_RENDER' });
-              dispatch({ type: 'LOADING' });
+              if (!loading) {
+                dispatch({ type: 'GET_POSTS' });
+                dispatch({ type: 'RE_RENDER' });
+                dispatch({ type: 'LOADING' });
+                return;
+              }
             }}
           >
             <IoDocuments />
@@ -43,21 +50,18 @@ export default function Index() {
         <div className="navigate-home">
           <a
             onClick={() => {
-              dispatch({ type: 'GET_POSTS_REPORTED' });
-              dispatch({ type: 'RE_RENDER' });
-              dispatch({ type: 'LOADING' });
+              if (!loading) {
+                dispatch({ type: 'GET_POSTS_REPORTED' });
+                dispatch({ type: 'RE_RENDER' });
+                dispatch({ type: 'LOADING' });
+                return;
+              }
             }}
           >
             <GoReport />
             <span className="navigate-home-span">Bài viết báo cáo</span>
           </a>
         </div>
-        {/* <div className="navigate-home">
-          <a>
-            <FaUserTimes />
-            <span className="navigate-home-span">Người dùng báo cáo</span>
-          </a>
-        </div> */}
       </div>
     </div>
   );
