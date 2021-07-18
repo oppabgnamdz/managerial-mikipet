@@ -172,11 +172,25 @@ export default function Index() {
                       {...row.getRowProps()}
                     >
                       {row.cells.map((cell) => {
+                        if (cell.value.toString().indexOf('https') !== -1) {
+                          return (
+                            <td
+                              onClick={(event) => {
+                                event.stopPropagation();
+                                setIsOpen(false);
+                              }}
+                              className="table-cell"
+                              {...cell.getCellProps()}
+                            >
+                              <a target="_blank" href={cell.value}>
+                                {cell.render('Cell')}
+                              </a>
+                            </td>
+                          );
+                        }
+
                         return (
-                          <td
-                            className="table-cell"
-                            {...cell.getCellProps()}
-                          >
+                          <td className="table-cell" {...cell.getCellProps()}>
                             {cell.render('Cell')}
                           </td>
                         );
