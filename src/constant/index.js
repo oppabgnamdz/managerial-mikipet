@@ -1,4 +1,4 @@
-const rootURL = `https://obnd-miki.herokuapp.com`;
+const rootURL = `http://obnd.me`;
 const urlUsers = `${rootURL}/admin-get-all-users`;
 const urlPosts = `${rootURL}/post-api/admin-get-all-posts`;
 const urlPostsReported = `${rootURL}/post-api/get-report`;
