@@ -8,7 +8,7 @@ export default function Loading({ height, width }) {
       color="#00BFFF"
       height={height || 100}
       width={width || 100}
-      timeout={100000} //3 secs
+      timeout={10000} //3 secs
     />
   );
 }

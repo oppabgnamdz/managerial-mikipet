@@ -23,10 +23,10 @@ export const COLUMNSPOSTS = [
     Header: 'Create At',
     accessor: 'created_date',
   },
-  {
-    Header: 'Image Url',
-    accessor: 'imgUrl',
-  },
+  // {
+  //   Header: 'Image Url',
+  //   accessor: 'imgUrl',
+  // },
   {
     Header: 'Content',
     accessor: 'textDescription',

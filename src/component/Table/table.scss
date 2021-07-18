@@ -20,6 +20,14 @@ table {
   }
 }
 
+.content-table {
+  flex-grow: 1;
+  flex-basis: 300px;
+}
+.table-cell {
+  max-width: 200px;
+}
+
 table td,
 table th {
   border: 1px solid #ddd;

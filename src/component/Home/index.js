@@ -11,8 +11,8 @@ export default function Index() {
   return (
     <div className="App">
       <div className="main-flex">
-        <Navigation style={{ flexBasis: '300px' }} />
-        <div style={{ flexGrow: 1, flexBasis: '100px' }}>
+        <Navigation className="navigation" />
+        <div className="app-content">
           <Header />
           <h1>{checkURL(urlFetch)}</h1>
           <Table />

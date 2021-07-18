@@ -1,9 +1,10 @@
 .nav {
   background-color: #ff9b7b;
   height: 100vh;
+  flex-basis: 300px;
+  // width: 500px;
   .intro {
     padding: 1rem 3rem;
-
     display: flex;
     flex-direction: column;
     align-items: center;

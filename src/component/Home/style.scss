@@ -1,4 +1,13 @@
-h1 {
-  margin: 0;
-  padding: 10px;
+.App {
+  text-align: center;
+  .main-flex {
+    display: flex;
+    h1 {
+      margin: 0;
+      padding: 10px;
+    }
+    .app-content {
+      flex-grow: 1;
+    }
+  }
 }
