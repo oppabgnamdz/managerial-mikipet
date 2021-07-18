@@ -21,6 +21,7 @@ import Search from '../Search';
 import Modal from 'react-modal';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import Loader from 'react-loader-spinner';
+import Loading from '../Loading';
 const customStyles = {
   content: {
     top: '50%',
@@ -178,13 +179,7 @@ export default function Index() {
             </tbody>
           </table>
         ) : (
-          <Loader
-            type="BallTriangle"
-            color="#00BFFF"
-            height={100}
-            width={100}
-            timeout={100000} //3 secs
-          />
+          <Loading />
         )}
       </div>
       <div>

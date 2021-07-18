@@ -14,6 +14,7 @@ import {
   urlUsers,
 } from '../../constant';
 import { useDispatch, useSelector } from 'react-redux';
+import Loading from '../Loading';
 export default function Header() {
   const [users, setUsers] = useState();
   const [postes, setPostes] = useState();
@@ -21,6 +22,8 @@ export default function Header() {
   const [rooms, setRooms] = useState();
   const dispatch = useDispatch();
   const reRender = useSelector((state) => state.reRender);
+  const loading = useSelector((state) => state.loading);
+  console.log(loading, 'header');
   useEffect(() => {
     const fetchDataUser = async () => {
       const promise1 = axios.get(urlUsers);
@@ -60,7 +63,9 @@ export default function Header() {
             <span lassName="header__route-flex-text-title">
               Số lượng người dùng
             </span>
-            <span className="header__route-flex-text-number">{users}</span>
+            <span className="header__route-flex-text-number">
+              {!loading ? users : <Loading height={20} width={20} />}
+            </span>
           </div>
         </a>
         <a
@@ -76,7 +81,9 @@ export default function Header() {
             <span lassName="header__route-flex-text-title">
               Số lượng bài viết
             </span>
-            <span className="header__route-flex-text-number">{postes}</span>
+            <span className="header__route-flex-text-number">
+              {!loading ? postes : <Loading height={20} width={20} />}
+            </span>
           </div>
         </a>
         <a
@@ -92,7 +99,9 @@ export default function Header() {
             <span lassName="header__route-flex-text-title">
               Bài viết bị báo cáo
             </span>
-            <span className="header__route-flex-text-number">{report}</span>
+            <span className="header__route-flex-text-number">
+              {!loading ? report : <Loading height={20} width={20} />}
+            </span>
           </div>
         </a>
         <a className="header__route-flex">
@@ -101,7 +110,9 @@ export default function Header() {
             <span className="header__route-flex-text-title">
               Tổng phòng chat
             </span>
-            <span className="header__route-flex-text-number">{rooms}</span>
+            <span className="header__route-flex-text-number">
+              {!loading ? rooms : <Loading height={20} width={20} />}
+            </span>
           </div>
         </a>
       </div>
