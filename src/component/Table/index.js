@@ -44,13 +44,13 @@ export default function Index() {
   const urlFetch = useSelector((state) => state.goTable);
   const loading = useSelector((state) => state.loading);
   const reRender = useSelector((state) => state.reRender);
-
   const columns = useMemo(() => COLUMNS, []);
   const columnsPosts = useMemo(() => COLUMNSPOSTS, []);
   const compare = urlFetch === urlUsers ? columns : columnsPosts;
   useEffect(() => {
     const fetchDataUser = async () => {
       const response = await axios.get(urlFetch);
+      console.log(response.config.url);
       if (!response) return;
       setData(response.data);
       dispatch({ type: 'FINISH' });

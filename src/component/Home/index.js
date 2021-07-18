@@ -7,7 +7,6 @@ import { checkURL } from '../../hooks';
 import './style.scss';
 export default function Index() {
   const urlFetch = useSelector((state) => state.goTable);
-  console.log(urlFetch);
   return (
     <div className="App">
       <div className="main-flex">

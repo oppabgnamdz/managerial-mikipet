@@ -1,7 +1,6 @@
 import React from 'react';
 import Loader from 'react-loader-spinner';
 export default function Loading({ height, width }) {
-  console.log(height, width);
   return (
     <Loader
       type="BallTriangle"

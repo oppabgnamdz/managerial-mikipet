@@ -52,9 +52,12 @@ export default function Header() {
       <div className="header__route">
         <a
           onClick={() => {
-            dispatch({ type: 'GET_USERS' });
-            dispatch({ type: 'RE_RENDER' });
-            dispatch({ type: 'LOADING' });
+            if (!loading) {
+              dispatch({ type: 'GET_USERS' });
+              dispatch({ type: 'RE_RENDER' });
+              dispatch({ type: 'LOADING' });
+              return;
+            }
           }}
           className="header__route-flex"
         >
@@ -70,9 +73,12 @@ export default function Header() {
         </a>
         <a
           onClick={() => {
-            dispatch({ type: 'GET_POSTS' });
-            dispatch({ type: 'RE_RENDER' });
-            dispatch({ type: 'LOADING' });
+            if (!loading) {
+              dispatch({ type: 'GET_POSTS' });
+              dispatch({ type: 'RE_RENDER' });
+              dispatch({ type: 'LOADING' });
+              return;
+            }
           }}
           className="header__route-flex"
         >
@@ -88,9 +94,12 @@ export default function Header() {
         </a>
         <a
           onClick={() => {
-            dispatch({ type: 'GET_POSTS_REPORTED' });
-            dispatch({ type: 'RE_RENDER' });
-            dispatch({ type: 'LOADING' });
+            if (!loading) {
+              dispatch({ type: 'GET_POSTS_REPORTED' });
+              dispatch({ type: 'RE_RENDER' });
+              dispatch({ type: 'LOADING' });
+              return;
+            }
           }}
           className="header__route-flex"
         >
