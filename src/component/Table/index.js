@@ -173,7 +173,10 @@ export default function Index() {
                     >
                       {row.cells.map((cell) => {
                         return (
-                          <td className="table-cell" {...cell.getCellProps()}>
+                          <td
+                            className="table-cell"
+                            {...cell.getCellProps()}
+                          >
                             {cell.render('Cell')}
                           </td>
                         );

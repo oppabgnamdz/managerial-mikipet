@@ -26,6 +26,14 @@ table {
 }
 .table-cell {
   max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  &:hover {
+    text-overflow: clip;
+    white-space: normal;
+    word-break: break-all;
+  }
 }
 
 table td,
