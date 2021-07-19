@@ -50,7 +50,6 @@ export default function Index() {
   useEffect(() => {
     const fetchDataUser = async () => {
       const response = await axios.get(urlFetch);
-      console.log(response.config.url);
       if (!response) return;
       setData(response.data);
       dispatch({ type: 'FINISH' });

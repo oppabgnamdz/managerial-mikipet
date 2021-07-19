@@ -43,7 +43,7 @@ export default function Index() {
       <NotificationAlert
         ref={notification}
         zIndex={9999}
-        onClick={() => console.log('hey')}
+        onClick={() => {}}
       />
       <form onSubmit={handleSubmit} className="form">
         <h1>Log in</h1>

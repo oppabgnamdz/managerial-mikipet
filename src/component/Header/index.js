@@ -23,7 +23,6 @@ export default function Header() {
   const dispatch = useDispatch();
   const reRender = useSelector((state) => state.reRender);
   const loading = useSelector((state) => state.loading);
-  console.log(loading, 'header');
   useEffect(() => {
     const fetchDataUser = async () => {
       const promise1 = axios.get(urlUsers);
