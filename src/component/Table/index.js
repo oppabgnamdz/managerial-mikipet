@@ -10,6 +10,7 @@ import {
   useTable,
 } from 'react-table';
 import {
+  config,
   urlChangeStatusAccount,
   urlDeletePost,
   urlPassPost,
@@ -48,9 +49,10 @@ export default function Index() {
   const columns = useMemo(() => COLUMNS, []);
   const columnsPosts = useMemo(() => COLUMNSPOSTS, []);
   const compare = urlFetch === urlUsers ? columns : columnsPosts;
+  const position = localStorage.getItem('position');
   useEffect(() => {
     const fetchDataUser = async () => {
-      const response = await axios.get(urlFetch);
+      const response = await axios.get(urlFetch, config);
       if (!response) return;
       setData(response.data);
       dispatch({ type: 'FINISH' });
@@ -124,7 +126,11 @@ export default function Index() {
     closeModal();
   };
   const updateStatusUser = async () => {
-    const response = await axios.post(urlChangeStatusAccount, { account });
+    const response = await axios.post(
+      urlChangeStatusAccount,
+      { account },
+      config
+    );
     if (response.status === 200) {
       dispatch({ type: 'RE_RENDER' });
       dispatch({ type: 'LOADING' });
@@ -187,11 +193,19 @@ export default function Index() {
                     <tr
                       style={{ cursor: 'pointer' }}
                       onClick={() => {
-                        if (urlFetch === urlPostsReported) {
+                        if (
+                          (urlFetch === urlPostsReported &&
+                            position === 'admin-report') ||
+                          position === 'admin'
+                        ) {
                           rowClick(row);
                           return;
                         }
-                        if (urlFetch === urlPosts) {
+                        if (
+                          (urlFetch === urlPosts &&
+                            position === 'admin-post') ||
+                          position === 'admin'
+                        ) {
                           console.log('abc');
                           rowClick(row);
                           return;
@@ -204,8 +218,13 @@ export default function Index() {
                           return (
                             <td
                               onClick={(event) => {
-                                event.stopPropagation();
-                                rowClick(row);
+                                if (
+                                  position === 'admin-user' ||
+                                  position === 'admin'
+                                ) {
+                                  event.stopPropagation();
+                                  rowClick(row);
+                                }
                               }}
                             >
                               {cell.value.toString() === 'active' ? (

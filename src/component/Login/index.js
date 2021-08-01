@@ -4,7 +4,7 @@ import NotificationAlert from 'react-notification-alert';
 import 'react-notification-alert/dist/animate.css';
 import { useHistory } from 'react-router-dom';
 import { authentication } from '../../auth';
-import { urlAdmin } from '../../constant';
+import { config, urlAdmin } from '../../constant';
 import './style.scss';
 
 const options = {
@@ -33,6 +33,14 @@ export default function Index() {
     if (response.data === 'Dont have admin') {
       notification.current.notificationAlert(options);
       return;
+    }
+    localStorage.setItem('token', response.data.token);
+    localStorage.setItem('name', account);
+    console.log(response.data.position);
+    if (!response.data.position) {
+      localStorage.setItem('position', 'admin');
+    } else {
+      localStorage.setItem('position', response.data.position);
     }
     authentication.onAuthentication();
     history.push('/home');

@@ -8,7 +8,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { FiUserPlus } from 'react-icons/fi';
 import {
+  config,
   urlAllRoom,
+  urlCreateAdmin,
   urlPosts,
   urlPostsReported,
   urlUpdatePassword,
@@ -44,19 +46,53 @@ export default function Header() {
   const loading = useSelector((state) => state.loading);
   const [modalIsOpen, setIsOpen] = useState(false);
   const [newPassword, setNewPassword] = useState('');
+  const [accountName, setAccountName] = useState('');
+  const [accountPass, setAccountPass] = useState('');
+  const [position, setPosition] = useState('');
   function afterOpenModal(e) {
     // references are now sync'd and can be accessed.
   }
+  const handleChangeValue = (e) => {
+    console.log(e.target.value);
+    setPosition(e.target.value);
+  };
   function closeModal() {
     setIsOpen(false);
   }
   const handleUpdate = async (e) => {
     try {
       e.preventDefault();
-      const response = await axios.post(urlUpdatePassword, {
-        account: 'admin',
-        password: newPassword,
-      });
+      if (accountName && accountPass && position) {
+        const response2 = await axios.post(
+          urlCreateAdmin,
+          {
+            account: accountName,
+            password: accountPass,
+            position,
+          },
+          config
+        );
+        console.log(response2.data);
+        if (response2.data !== 'dont have user') {
+          alert('Create admin successfully');
+        }
+        closeModal(true);
+        return;
+      }
+      if (newPassword === '') {
+        closeModal(true);
+        return;
+      }
+
+      const response = await axios.post(
+        urlUpdatePassword,
+        {
+          account: localStorage.getItem('name'),
+          password: newPassword,
+        },
+        config
+      );
+
       history.push('/');
     } catch (e) {
       console.log(e.message);
@@ -64,10 +100,10 @@ export default function Header() {
   };
   useEffect(() => {
     const fetchDataUser = async () => {
-      const promise1 = axios.get(urlUsers);
-      const promise2 = axios.get(urlPosts);
-      const promise3 = axios.get(urlPostsReported);
-      const promise4 = axios.get(urlAllRoom);
+      const promise1 = axios.get(urlUsers, config);
+      const promise2 = axios.get(urlPosts, config);
+      const promise3 = axios.get(urlPostsReported, config);
+      const promise4 = axios.get(urlAllRoom, config);
       Promise.all([promise1, promise2, promise3, promise4]).then(function (
         values
       ) {
@@ -197,6 +233,46 @@ export default function Header() {
                 placeholder="Enter your new password"
               ></input>
             </div>
+            {localStorage.getItem('position') !== 'admin' ? (
+              <div></div>
+            ) : (
+              <div>
+                <div className="update-password">
+                  <label for="account">Name</label>
+                  <input
+                    onChange={(e) => {
+                      setAccountName(e.target.value);
+                    }}
+                    type=""
+                    id="account"
+                    placeholder="Enter account name  "
+                  ></input>
+                </div>
+                <div className="update-password">
+                  <label for="account">Password</label>
+                  <input
+                    onChange={(e) => {
+                      setAccountPass(e.target.value);
+                    }}
+                    type=""
+                    id="account"
+                    placeholder="Enter password name "
+                  ></input>
+                </div>
+                <select
+                  id="mySelect"
+                  value={position}
+                  onChange={handleChangeValue}
+                >
+                  <option value="" disabled>
+                    Defaul
+                  </option>
+                  <option value="admin-report">admin-report</option>
+                  <option value="admin-post">admin-post</option>
+                  <option value="admin-user">admin-user</option>
+                </select>
+              </div>
+            )}
             <div className="cover-submit">
               <button type="submit" className="link-submit">
                 <span></span>
