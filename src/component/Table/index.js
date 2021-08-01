@@ -10,6 +10,7 @@ import {
   useTable,
 } from 'react-table';
 import {
+  config,
   urlChangeStatusAccount,
   urlDeletePost,
   urlPassPost,
@@ -50,7 +51,7 @@ export default function Index() {
   const compare = urlFetch === urlUsers ? columns : columnsPosts;
   useEffect(() => {
     const fetchDataUser = async () => {
-      const response = await axios.get(urlFetch);
+      const response = await axios.get(urlFetch, config);
       if (!response) return;
       setData(response.data);
       dispatch({ type: 'FINISH' });
@@ -124,7 +125,11 @@ export default function Index() {
     closeModal();
   };
   const updateStatusUser = async () => {
-    const response = await axios.post(urlChangeStatusAccount, { account });
+    const response = await axios.post(
+      urlChangeStatusAccount,
+      { account },
+      config
+    );
     if (response.status === 200) {
       dispatch({ type: 'RE_RENDER' });
       dispatch({ type: 'LOADING' });

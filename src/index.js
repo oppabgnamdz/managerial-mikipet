@@ -6,6 +6,25 @@ import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import reducers from './reducers';
+import axios from 'axios';
+import { urlAdmin } from './constant';
+
+// axios.interceptors.response.use(
+//   (response) => response,
+//   async (error) => {
+//     const { config: oldRequest } = error.response;
+//     const response = await axios.post(urlAdmin, {
+//       account: 'admin',
+//       password: 'miki',
+//     });
+//     localStorage.setItem('token', response.data);
+//     oldRequest.headers['Authorization'] = 'Bearer ' + response.data;
+//     console.log(response.data);
+//     const newData = await axios.request(oldRequest);
+//     return newData;
+//   }
+// );
+
 const store = createStore(reducers);
 ReactDOM.render(
   <React.StrictMode>

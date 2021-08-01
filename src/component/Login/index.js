@@ -29,12 +29,15 @@ export default function Index() {
       account,
       password,
     });
-    console.log(response);
+    console.log(response.data);
     if (response.data === 'Dont have admin') {
       notification.current.notificationAlert(options);
       return;
     }
+    localStorage.setItem('token', response.data.token);
+    localStorage.setItem('position', response.data.position);
     authentication.onAuthentication();
+
     history.push('/home');
     setAccount('');
     setPassword('');
