@@ -13,6 +13,7 @@ import './table.scss';
 import {
   urlChangeStatusAccount,
   urlDeletePost,
+  urlPassPost,
   urlPosts,
   urlPostsReported,
   urlUsers,
@@ -39,6 +40,7 @@ export default function Index() {
   const [active, setActive] = useState('undefined');
   const [account, setAccount] = useState();
   const [idPostDelete, setIdPostDelete] = useState('');
+  const [idShow, setIdShow] = useState('');
 
   const dispatch = useDispatch();
   const urlFetch = useSelector((state) => state.goTable);
@@ -84,6 +86,9 @@ export default function Index() {
       setIsOpen(true);
       setActive(value[6].value);
       setAccount(value[1].value);
+      setIdShow(value[0].value);
+
+      console.log(value);
       return;
     }
     if (urlFetch === urlPostsReported) {
@@ -96,6 +101,18 @@ export default function Index() {
   }
   const deletePostReport = async () => {
     const response = await axios.post(urlDeletePost, { id: idPostDelete });
+    if (response.status === 200) {
+      dispatch({ type: 'RE_RENDER' });
+      dispatch({ type: 'LOADING' });
+    }
+    closeModal();
+  };
+  const passPostReport = async () => {
+    const response = await axios.post(urlPassPost, {
+      id: idPostDelete,
+      refresh: true,
+    });
+    console.log({ idPostDelete });
     if (response.status === 200) {
       dispatch({ type: 'RE_RENDER' });
       dispatch({ type: 'LOADING' });
@@ -166,12 +183,32 @@ export default function Index() {
                     <tr
                       style={{ cursor: 'pointer' }}
                       onClick={() => {
-                        rowClick(row);
+                        if (urlFetch === urlPostsReported) {
+                          rowClick(row);
+                        }
                       }}
                       {...row.getRowProps()}
                     >
                       {row.cells.map((cell) => {
-                        if (cell.value.toString().indexOf('https') !== -1) {
+                        if (cell.column.Header === 'Active') {
+                          return (
+                            <td
+                              onClick={(event) => {
+                                event.stopPropagation();
+                                rowClick(row);
+                              }}
+                            >
+                              {cell.value.toString() === 'active' ? (
+                                <span>{cell.render('Cell')}</span>
+                              ) : (
+                                <span style={{ color: 'red' }}>
+                                  {cell.render('Cell')}
+                                </span>
+                              )}
+                            </td>
+                          );
+                        }
+                        if (cell.value.toString().indexOf('http') !== -1) {
                           return (
                             <td
                               onClick={(event) => {
@@ -227,7 +264,7 @@ export default function Index() {
       >
         {urlFetch === urlUsers && (
           <div>
-            <h2>Hello</h2>
+            <h2>{idShow}</h2>
             <h2>
               Account is <strong style={{ color: 'red' }}>{active}</strong>
             </h2>
@@ -239,10 +276,16 @@ export default function Index() {
         )}
         {urlFetch === urlPostsReported && (
           <div>
-            <h2>Hello</h2>
-            <p>Do you want to delete this post ? </p>
+            <h2>{idPostDelete}</h2>
+            <p>What would you want ? </p>
             <div className="change-status">
               <button onClick={deletePostReport}>Delete Post</button>
+              <button
+                style={{ backgroundColor: '#4caf50' }}
+                onClick={passPostReport}
+              >
+                Pass Post
+              </button>
             </div>
           </div>
         )}

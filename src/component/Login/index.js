@@ -6,6 +6,7 @@ import axios from 'axios';
 import NotificationAlert from 'react-notification-alert';
 import 'react-notification-alert/dist/animate.css';
 import { authentication } from '../../auth';
+import { urlAdmin } from '../../constant';
 
 const options = {
   place: 'tr',
@@ -25,10 +26,11 @@ export default function Index() {
   const history = useHistory();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await axios.post(`https://obnd-miki.herokuapp.com/admin`, {
+    const response = await axios.post(urlAdmin, {
       account,
       password,
     });
+    console.log(response);
     if (response.data === 'Dont have admin') {
       notification.current.notificationAlert(options);
       return;
@@ -40,11 +42,7 @@ export default function Index() {
   };
   return (
     <div className="login-page">
-      <NotificationAlert
-        ref={notification}
-        zIndex={9999}
-        onClick={() => {}}
-      />
+      <NotificationAlert ref={notification} zIndex={9999} onClick={() => {}} />
       <form onSubmit={handleSubmit} className="form">
         <h1>Log in</h1>
         <div className="login-account">

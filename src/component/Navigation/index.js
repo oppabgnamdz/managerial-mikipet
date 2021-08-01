@@ -5,7 +5,7 @@ import { IoHome } from 'react-icons/io5';
 import { IoDocuments } from 'react-icons/io5';
 import { FaUserTimes } from 'react-icons/fa';
 import { GoReport } from 'react-icons/go';
-import { useDispatch,useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 export default function Index() {
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.loading);
@@ -44,7 +44,7 @@ export default function Index() {
             }}
           >
             <IoDocuments />
-            <span className="navigate-home-span">Số lượng bài viết</span>
+            <span className="navigate-home-span">Số lượng bài viết </span>
           </a>
         </div>
         <div className="navigate-home">

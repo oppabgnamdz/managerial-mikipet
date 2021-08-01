@@ -5,9 +5,9 @@ table {
 }
 .change-status {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   button {
-    background-color: #4caf50; /* Green */
+    background-color: red; /* Green */
     border: none;
     color: white;
     padding: 15px 32px;
