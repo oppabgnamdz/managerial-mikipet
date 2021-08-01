@@ -1,12 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
-import './style.scss';
-import { Link } from 'react-router-dom';
-import { useHistory } from 'react-router-dom';
 import axios from 'axios';
+import React, { useRef, useState } from 'react';
 import NotificationAlert from 'react-notification-alert';
 import 'react-notification-alert/dist/animate.css';
+import { useHistory } from 'react-router-dom';
 import { authentication } from '../../auth';
 import { urlAdmin } from '../../constant';
+import './style.scss';
 
 const options = {
   place: 'tr',
@@ -66,7 +65,7 @@ export default function Index() {
             type="password"
             id="account"
             name="firstname"
-            placeholder="Enter your account"
+            placeholder="Enter your password"
           ></input>
         </div>
         <div className="cover-submit">

@@ -1,15 +1,14 @@
-import React, { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
+import React, { useEffect, useMemo, useState } from 'react';
+import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
+import Modal from 'react-modal';
+import { useDispatch, useSelector } from 'react-redux';
 import {
-  useTable,
-  useSortBy,
   useGlobalFilter,
   usePagination,
+  useSortBy,
+  useTable,
 } from 'react-table';
-import { COLUMNS } from './columnsUsers';
-import { COLUMNSPOSTS } from './columsPosts';
-import { useSelector, useDispatch } from 'react-redux';
-import './table.scss';
 import {
   urlChangeStatusAccount,
   urlDeletePost,
@@ -18,11 +17,11 @@ import {
   urlPostsReported,
   urlUsers,
 } from '../../constant';
-import Search from '../Search';
-import Modal from 'react-modal';
-import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
-import Loader from 'react-loader-spinner';
 import Loading from '../Loading';
+import Search from '../Search';
+import { COLUMNS } from './columnsUsers';
+import { COLUMNSPOSTS } from './columsPosts';
+import './table.scss';
 const customStyles = {
   content: {
     top: '50%',
@@ -94,6 +93,11 @@ export default function Index() {
     if (urlFetch === urlPostsReported) {
       setIsOpen(true);
       setIdPostDelete(value[0].value);
+      return;
+    }
+    if (urlFetch === urlPosts) {
+      setIsOpen(true);
+      setIdPostDelete(value[0].value);
     }
   }
   function afterOpenModal(e) {
@@ -134,7 +138,7 @@ export default function Index() {
     if (urlFetch === urlUsers) {
       openModal(row.cells);
     } else if (urlFetch === urlPosts) {
-      window.open(row.cells[6].value);
+      openModal(row.cells);
     } else {
       openModal(row.cells);
     }
@@ -185,6 +189,12 @@ export default function Index() {
                       onClick={() => {
                         if (urlFetch === urlPostsReported) {
                           rowClick(row);
+                          return;
+                        }
+                        if (urlFetch === urlPosts) {
+                          console.log('abc');
+                          rowClick(row);
+                          return;
                         }
                       }}
                       {...row.getRowProps()}
@@ -205,6 +215,17 @@ export default function Index() {
                                   {cell.render('Cell')}
                                 </span>
                               )}
+                            </td>
+                          );
+                        }
+                        if (cell.column.Header === 'Id') {
+                          return (
+                            <td
+                              onClick={(event) => {
+                                event.stopPropagation();
+                              }}
+                            >
+                              {cell.render('Cell')}
                             </td>
                           );
                         }
@@ -286,6 +307,15 @@ export default function Index() {
               >
                 Pass Post
               </button>
+            </div>
+          </div>
+        )}
+        {urlFetch === urlPosts && (
+          <div>
+            <h2>{idPostDelete}</h2>
+            <p>What would you want ? </p>
+            <div className="change-status">
+              <button onClick={deletePostReport}>Delete Post</button>
             </div>
           </div>
         )}
