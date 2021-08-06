@@ -4,9 +4,13 @@ import NotificationAlert from 'react-notification-alert';
 import 'react-notification-alert/dist/animate.css';
 import { useHistory } from 'react-router-dom';
 import { authentication } from '../../auth';
-import { config, urlAdmin } from '../../constant';
+import { urlAdmin } from '../../constant';
 import './style.scss';
-
+let config = {
+  headers: {
+    Authorization: 'Bearer ' + localStorage.getItem('token'),
+  },
+};
 const options = {
   place: 'tr',
   message: (
@@ -29,7 +33,7 @@ export default function Index() {
       account,
       password,
     });
-    console.log(response);
+    console.log(response.data);
     if (response.data === 'Dont have admin') {
       notification.current.notificationAlert(options);
       return;
@@ -43,6 +47,7 @@ export default function Index() {
       localStorage.setItem('position', response.data.position);
     }
     authentication.onAuthentication();
+
     history.push('/home');
     setAccount('');
     setPassword('');

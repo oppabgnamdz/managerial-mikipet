@@ -10,7 +10,6 @@ import {
   useTable,
 } from 'react-table';
 import {
-  config,
   urlChangeStatusAccount,
   urlDeletePost,
   urlPassPost,
@@ -31,6 +30,11 @@ const customStyles = {
     bottom: 'auto',
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
+  },
+};
+let config = {
+  headers: {
+    Authorization: 'Bearer ' + localStorage.getItem('token'),
   },
 };
 Modal.setAppElement(document.getElementById('root'));
@@ -194,17 +198,27 @@ export default function Index() {
                       style={{ cursor: 'pointer' }}
                       onClick={() => {
                         if (
-                          (urlFetch === urlPostsReported &&
-                            position === 'admin-report') ||
+                          urlFetch === urlPostsReported &&
+                          position === 'admin-report'
+                        ) {
+                          console.log('qwe');
+                          rowClick(row);
+                          return;
+                        }
+                        if (urlFetch === urlPosts && position === 'admin') {
+                          rowClick(row);
+                          return;
+                        }
+                        if (
+                          urlFetch === urlPostsReported &&
                           position === 'admin'
                         ) {
                           rowClick(row);
                           return;
                         }
                         if (
-                          (urlFetch === urlPosts &&
-                            position === 'admin-post') ||
-                          position === 'admin'
+                          urlFetch === urlPosts &&
+                          position === 'admin-post'
                         ) {
                           console.log('abc');
                           rowClick(row);
@@ -288,10 +302,24 @@ export default function Index() {
             {pageIndex + 1} of {pageOptions.length}
           </strong>
         </span>
-        <button onClick={() => previousPage()} disabled={!canPreviousPage}>
+        <button
+          onClick={() => {
+            setTimeout(() => {
+              previousPage();
+            }, 1000);
+          }}
+          disabled={!canPreviousPage}
+        >
           Previous
         </button>
-        <button onClick={() => nextPage()} disabled={!canNextPage}>
+        <button
+          onClick={() => {
+            setTimeout(() => {
+              nextPage();
+            }, 1000);
+          }}
+          disabled={!canNextPage}
+        >
           Next
         </button>
       </div>

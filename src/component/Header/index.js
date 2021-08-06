@@ -8,7 +8,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { FiUserPlus } from 'react-icons/fi';
 import {
-  config,
   urlAllRoom,
   urlCreateAdmin,
   urlPosts,
@@ -32,6 +31,11 @@ const customStyles = {
     boxShadow: ` rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
     rgba(60, 64, 67, 2) 0px 2px 6px 2px`,
     borderRadius: '1rem',
+  },
+};
+let config = {
+  headers: {
+    Authorization: 'Bearer ' + localStorage.getItem('token'),
   },
 };
 Modal.setAppElement(document.getElementById('root'));
