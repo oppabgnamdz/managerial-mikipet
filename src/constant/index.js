@@ -9,11 +9,7 @@ const urlChangeStatusAccount = `${rootURL}/admin-update-account`;
 const urlDeletePost = `${rootURL}/post-api/delete-post`;
 const urlPassPost = `${rootURL}/post-api/update-report`;
 const urlCreateAdmin = `${rootURL}/admin-create-admin`;
-let config = {
-  headers: {
-    Authorization: 'Bearer ' + localStorage.getItem('token'),
-  },
-};
+
 
 export {
   urlUsers,
@@ -26,5 +22,5 @@ export {
   urlAdmin,
   urlUpdatePassword,
   urlCreateAdmin,
-  config,
+
 };
