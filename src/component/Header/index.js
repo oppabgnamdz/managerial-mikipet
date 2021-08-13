@@ -7,7 +7,9 @@ import { TiGroup } from 'react-icons/ti';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { FiUserPlus } from 'react-icons/fi';
+import { CgProfile } from 'react-icons/cg';
 import {
+	urlAdmin,
 	urlAllRoom,
 	urlCreateAdmin,
 	urlPosts,
@@ -19,6 +21,7 @@ import Loading from '../Loading';
 import './style.scss';
 import Modal from 'react-modal';
 import { useHistory } from 'react-router-dom';
+import Select from 'react-select';
 const customStyles = {
 	content: {
 		top: '50%',
@@ -45,51 +48,77 @@ export default function Header() {
 	const reRender = useSelector((state) => state.reRender);
 	const loading = useSelector((state) => state.loading);
 	const [modalIsOpen, setIsOpen] = useState(false);
+	const [modalIsOpen2, setIsOpen2] = useState(false);
 	const [newPassword, setNewPassword] = useState('');
 	const [accountName, setAccountName] = useState('');
 	const [accountPass, setAccountPass] = useState('');
-	const [position, setPosition] = useState('');
+	const [currentPassword, setCurrentPassword] = useState('');
+	const [confirmNewPassword, setConfirmNewPassword] = useState('');
+	const [error, setError] = useState('');
+	const [errorCurrentPassword, setErrorCurrentPassword] = useState('');
+	const [position, setPosition] = useState(null);
 	function afterOpenModal(e) {
 		// references are now sync'd and can be accessed.
 	}
 	const handleChangeValue = (e) => {
-		console.log(e.target.value);
-		setPosition(e.target.value);
+		// console.log(e.target.value);
+		setPosition(e);
 	};
 	function closeModal() {
 		setIsOpen(false);
 	}
-
+	function closeModal2() {
+		setIsOpen2(false);
+	}
+	const options = [
+		{ value: 'admin-report', label: 'Admin report' },
+		{ value: 'admin-user', label: 'Admin User' },
+		{ value: 'admin-post', label: 'Admin Post' },
+	];
 	const handleUpdate = async (e) => {
 		try {
 			e.preventDefault();
-			if (accountName && accountPass && position) {
+			if (accountName && accountPass && position.value) {
+				console.log({ accountName, accountPass, position });
 				const response2 = await axios.post(urlCreateAdmin, {
 					account: accountName,
 					password: accountPass,
-					position,
+					position: position.value,
 				});
 				console.log(response2.data);
 				if (response2.data !== 'dont have user') {
 					alert('Create admin successfully');
+				} else {
+					alert('This account has been created');
 				}
-				closeModal(true);
+				closeModal2(true);
 				return;
 			}
-			if (newPassword === '') {
-				closeModal(true);
-				return;
-			}
-
-			const response = await axios.post(urlUpdatePassword, {
-				account: localStorage.getItem('name'),
-				password: newPassword,
-			});
-
-			history.push('/');
 		} catch (e) {
 			console.log(e.message);
 		}
+	};
+	const handleUpdateProfile = async (e) => {
+		e.preventDefault();
+		const account = localStorage.getItem('name');
+		const response = await axios.post(urlAdmin, {
+			account,
+			password: currentPassword,
+		});
+		if (response.data === 'Dont have admin') {
+			setErrorCurrentPassword('Current password incorrect !');
+			return;
+		}
+		if (newPassword !== confirmNewPassword) {
+			setError('New password not match');
+			return;
+		}
+		const response2 = await axios.post(urlUpdatePassword, {
+			account: localStorage.getItem('name'),
+			password: newPassword,
+		});
+
+		history.push('/');
 	};
 	useEffect(() => {
 		const fetchDataUser = async () => {
@@ -120,8 +149,18 @@ export default function Header() {
 						className="header__statistic-link"
 						href="#"
 					>
+						<CgProfile className="icon-user" />
+					</a>
+					<a
+						onClick={() => {
+							setIsOpen2(true);
+						}}
+						className="header__statistic-link"
+						href="#"
+					>
 						<FiUserPlus className="icon-user" />
 					</a>
+
 					<Link to="/" className="header__statistic-link" href="#">
 						<IoLogOut className="icon-log-out" />
 					</Link>
@@ -211,21 +250,86 @@ export default function Header() {
 				contentLabel="Example Modal"
 			>
 				<div className="modal-admin">
-					<form onSubmit={handleUpdate} className="form">
+					<form onSubmit={handleUpdateProfile} className="form">
 						<h1>Update info</h1>
 
 						<div className="update-password">
-							<label for="account">New Password</label>
+							<label for="account">Current password</label>
 							<input
 								onChange={(e) => {
-									setNewPassword(e.target.value);
+									setCurrentPassword(e.target.value);
 								}}
 								type="password"
 								id="account"
 								name="firstname"
 								placeholder="Enter your new password"
 							></input>
+							<span style={{ color: 'red' }}>{errorCurrentPassword}</span>
 						</div>
+						{localStorage.getItem('position') !== 'admin' ? (
+							<div></div>
+						) : (
+							<div>
+								<div className="update-password">
+									<label for="account">New password</label>
+									<input
+										onChange={(e) => {
+											setNewPassword(e.target.value);
+										}}
+										type="password"
+										id="account"
+										placeholder="Enter account name  "
+									></input>
+								</div>
+								<div className="update-password">
+									<label for="account">Confirm new password</label>
+									<input
+										onChange={(e) => {
+											setConfirmNewPassword(e.target.value);
+										}}
+										type="password"
+										id="account"
+										placeholder="Enter password name "
+									></input>
+									<span style={{ color: 'red' }}>{error}</span>
+								</div>
+								{/* <select
+									id="mySelect"
+									value={position}
+									onChange={handleChangeValue}
+								>
+									<option value="" disabled>
+										Defaul
+									</option>
+									<option value="admin-report">admin-report</option>
+									<option value="admin-post">admin-post</option>
+									<option value="admin-user">admin-user</option>
+								</select> */}
+							</div>
+						)}
+						<div className="cover-submit">
+							<button type="submit" className="link-submit">
+								<span></span>
+								<span></span>
+								<span></span>
+								<span></span>
+								Update
+							</button>
+						</div>
+					</form>
+				</div>
+			</Modal>
+			<Modal
+				isOpen={modalIsOpen2}
+				onAfterOpen={afterOpenModal}
+				onRequestClose={closeModal2}
+				style={customStyles}
+				contentLabel="Example Modal"
+			>
+				<div className="modal-admin">
+					<form onSubmit={handleUpdate} className="form">
+						<h1>Create admin</h1>
+
 						{localStorage.getItem('position') !== 'admin' ? (
 							<div></div>
 						) : (
@@ -252,18 +356,27 @@ export default function Header() {
 										placeholder="Enter password name "
 									></input>
 								</div>
-								<select
+								{/* <select
 									id="mySelect"
 									value={position}
 									onChange={handleChangeValue}
 								>
 									<option value="" disabled>
-										Defaul
+										Select
 									</option>
 									<option value="admin-report">admin-report</option>
 									<option value="admin-post">admin-post</option>
 									<option value="admin-user">admin-user</option>
-								</select>
+								</select> */}
+								<div className="select-item">
+									<div className="item">
+										<Select
+											value={position}
+											onChange={handleChangeValue}
+											options={options}
+										/>
+									</div>
+								</div>
 							</div>
 						)}
 						<div className="cover-submit">
@@ -272,7 +385,7 @@ export default function Header() {
 								<span></span>
 								<span></span>
 								<span></span>
-								Update
+								Create
 							</button>
 						</div>
 					</form>
