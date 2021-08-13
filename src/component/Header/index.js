@@ -140,7 +140,7 @@ export default function Header() {
 	return (
 		<div className="header">
 			<div className="header__statistic">
-				<h1>Thống Kê</h1>
+				<h1>Statistic</h1>
 				<div>
 					<a
 						onClick={() => {
@@ -181,7 +181,7 @@ export default function Header() {
 					<TiGroup className="header__route-flex-icon users" />
 					<div className="header__route-flex-text">
 						<span lassName="header__route-flex-text-title">
-							Số lượng người dùng
+							Number of Users
 						</span>
 						<span className="header__route-flex-text-number">
 							{!loading ? users : <Loading height={20} width={20} />}
@@ -202,7 +202,7 @@ export default function Header() {
 					<IoDocuments className="header__route-flex-icon posts" />
 					<div className="header__route-flex-text">
 						<span lassName="header__route-flex-text-title">
-							Số lượng bài viết
+							Number of posts
 						</span>
 						<span className="header__route-flex-text-number">
 							{!loading ? postes : <Loading height={20} width={20} />}
@@ -222,9 +222,7 @@ export default function Header() {
 				>
 					<GoReport className="header__route-flex-icon user-report" />
 					<div className="header__route-flex-text">
-						<span lassName="header__route-flex-text-title">
-							Bài viết bị báo cáo
-						</span>
+						<span lassName="header__route-flex-text-title">Reported posts</span>
 						<span className="header__route-flex-text-number">
 							{!loading ? report : <Loading height={20} width={20} />}
 						</span>
@@ -234,7 +232,7 @@ export default function Header() {
 					<FaUserTimes className="header__route-flex-icon post-report" />
 					<div className="header__route-flex-text">
 						<span className="header__route-flex-text-title">
-							Tổng phòng chat
+							Total Room Chat
 						</span>
 						<span className="header__route-flex-text-number">
 							{!loading ? rooms : <Loading height={20} width={20} />}
