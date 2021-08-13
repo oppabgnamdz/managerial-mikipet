@@ -1,4 +1,4 @@
-const rootURL = `http://localhost:4001`;
+const rootURL = `http://obnd.me:4001`;
 const urlAdmin = `${rootURL}/admin`;
 const urlUsers = `${rootURL}/admin-get-all-users`;
 const urlUpdatePassword = `${rootURL}/admin-update-password`;
