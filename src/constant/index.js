@@ -1,4 +1,4 @@
-const rootURL = `http://obnd.me`;
+const rootURL = `http://localhost:4001`;
 const urlAdmin = `${rootURL}/admin`;
 const urlUsers = `${rootURL}/admin-get-all-users`;
 const urlUpdatePassword = `${rootURL}/admin-update-password`;
@@ -10,17 +10,15 @@ const urlDeletePost = `${rootURL}/post-api/delete-post`;
 const urlPassPost = `${rootURL}/post-api/update-report`;
 const urlCreateAdmin = `${rootURL}/admin-create-admin`;
 
-
 export {
-  urlUsers,
-  urlPosts,
-  urlPostsReported,
-  urlAllRoom,
-  urlChangeStatusAccount,
-  urlDeletePost,
-  urlPassPost,
-  urlAdmin,
-  urlUpdatePassword,
-  urlCreateAdmin,
-
+	urlUsers,
+	urlPosts,
+	urlPostsReported,
+	urlAllRoom,
+	urlChangeStatusAccount,
+	urlDeletePost,
+	urlPassPost,
+	urlAdmin,
+	urlUpdatePassword,
+	urlCreateAdmin,
 };

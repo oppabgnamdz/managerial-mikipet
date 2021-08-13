@@ -17,6 +17,7 @@ import {
 	urlPostsReported,
 	urlUsers,
 } from '../../constant';
+import { Paging } from '../../utils';
 import Loading from '../Loading';
 import Search from '../Search';
 import { COLUMNS } from './columnsUsers';
@@ -295,9 +296,13 @@ export default function Index() {
 					</strong>
 				</span>
 				<button
-					onClick={() => {
+					onClick={async () => {
+						dispatch({ type: 'LOADING' });
+						Paging(pageIndex - 1, urlFetch);
 						setTimeout(() => {
 							previousPage();
+							dispatch({ type: 'FINISH' });
+							console.log('b');
 						}, 1000);
 					}}
 					disabled={!canPreviousPage}
@@ -306,8 +311,11 @@ export default function Index() {
 				</button>
 				<button
 					onClick={() => {
+						dispatch({ type: 'LOADING' });
+						Paging(pageIndex + 1, urlFetch);
 						setTimeout(() => {
-							nextPage();
+							nextPage(pageIndex, urlFetch);
+							dispatch({ type: 'FINISH' });
 						}, 1000);
 					}}
 					disabled={!canNextPage}
