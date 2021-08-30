@@ -42,6 +42,7 @@ export default function Index() {
 	const [account, setAccount] = useState();
 	const [idPostDelete, setIdPostDelete] = useState('');
 	const [idShow, setIdShow] = useState('');
+	const user = useSelector((state) => state.user);
 
 	const dispatch = useDispatch();
 	const urlFetch = useSelector((state) => state.goTable);
@@ -50,7 +51,7 @@ export default function Index() {
 	const columns = useMemo(() => COLUMNS, []);
 	const columnsPosts = useMemo(() => COLUMNSPOSTS, []);
 	const compare = urlFetch === urlUsers ? columns : columnsPosts;
-	const position = localStorage.getItem('position');
+	const position = user.position;
 	useEffect(() => {
 		const fetchDataUser = async () => {
 			const response = await axios.get(urlFetch);

@@ -47,6 +47,8 @@ export default function Header() {
 	const history = useHistory();
 	const reRender = useSelector((state) => state.reRender);
 	const loading = useSelector((state) => state.loading);
+	const user = useSelector((state) => state.user);
+
 	const [modalIsOpen, setIsOpen] = useState(false);
 	const [modalIsOpen2, setIsOpen2] = useState(false);
 	const [newPassword, setNewPassword] = useState('');
@@ -100,7 +102,7 @@ export default function Header() {
 	};
 	const handleUpdateProfile = async (e) => {
 		e.preventDefault();
-		const account = localStorage.getItem('name');
+		const account = user.name;
 		const response = await axios.post(urlAdmin, {
 			account,
 			password: currentPassword,
@@ -114,7 +116,7 @@ export default function Header() {
 			return;
 		}
 		const response2 = await axios.post(urlUpdatePassword, {
-			account: localStorage.getItem('name'),
+			account: user.name,
 			password: newPassword,
 		});
 
@@ -161,7 +163,14 @@ export default function Header() {
 						<FiUserPlus className="icon-user" />
 					</a>
 
-					<Link to="/" className="header__statistic-link" href="#">
+					<Link
+						onClick={() => {
+							dispatch({ type: 'LOGOUT' });
+						}}
+						to="/"
+						className="header__statistic-link"
+						href="#"
+					>
 						<IoLogOut className="icon-log-out" />
 					</Link>
 				</div>
@@ -264,7 +273,7 @@ export default function Header() {
 							></input>
 							<span style={{ color: 'red' }}>{errorCurrentPassword}</span>
 						</div>
-						{localStorage.getItem('position') !== 'admin' ? (
+						{user.position !== 'admin' ? (
 							<div></div>
 						) : (
 							<div>
@@ -328,7 +337,7 @@ export default function Header() {
 					<form onSubmit={handleUpdate} className="form">
 						<h1>Create admin</h1>
 
-						{localStorage.getItem('position') !== 'admin' ? (
+						{user.position !== 'admin' ? (
 							<div></div>
 						) : (
 							<div>

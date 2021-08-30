@@ -5,12 +5,10 @@ import 'react-notification-alert/dist/animate.css';
 import { useHistory } from 'react-router-dom';
 import { authentication } from '../../auth';
 import { urlAdmin } from '../../constant';
+import { useDispatch, useSelector } from 'react-redux';
+
 import './style.scss';
-let config = {
-	headers: {
-		Authorization: 'Bearer ' + localStorage.getItem('token'),
-	},
-};
+
 const options = {
 	place: 'tr',
 	message: (
@@ -27,6 +25,7 @@ export default function Index() {
 	const [password, setPassword] = useState('');
 	const notification = useRef(null);
 	const history = useHistory();
+	const dispatch = useDispatch();
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		const response = await axios.post(urlAdmin, {
@@ -38,21 +37,23 @@ export default function Index() {
 			notification.current.notificationAlert(options);
 			return;
 		}
-		localStorage.setItem('token', response.data.token);
-		localStorage.setItem('name', account);
+	
 		console.log(response.data.position);
-		if (!response.data.position) {
-			localStorage.setItem('position', 'admin');
-		} else {
-			localStorage.setItem('position', response.data.position);
-		}
+		dispatch({
+			type: 'LOGIN',
+			payload: {
+				token: response.data.token,
+				name: account,
+				position: response.data.position ? response.data.position : 'admin',
+			},
+		});
+		
 		authentication.onAuthentication();
 
 		axios.interceptors.request.use(
 			function (config) {
 				// Do something before request is sent
-				config.headers.Authorization =
-					'Bearer ' + localStorage.getItem('token');
+				config.headers.Authorization = 'Bearer ' + response.data.token;
 				return config;
 			},
 			function (error) {
