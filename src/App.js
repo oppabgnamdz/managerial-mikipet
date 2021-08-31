@@ -13,15 +13,19 @@ import {
 import { SecuredRoute } from './component/SecretRoute';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import axios from 'axios';
 function App() {
+	const user = useSelector((state) => state.user);
 
 	return (
 		<Router>
 			<Switch>
 				<SecuredRoute exact path="/home" component={Home}></SecuredRoute>
 				<Route exact path="/">
-					<Login />
+					{user.token ? (
+						<Redirect to={{ pathname: '/home' }}></Redirect>
+					) : (
+						<Login />
+					)}
 				</Route>
 				<Route>
 					<Redirect to={{ pathname: '/' }}></Redirect>

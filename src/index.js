@@ -11,8 +11,27 @@ import { PersistGate } from 'redux-persist/lib/integration/react';
 import { persistor, store } from './store';
 import axios from 'axios';
 import setupAxios from './setupAxios';
-
+import { urlRefreshTokenAdmin } from './constant';
+import createAuthRefreshInterceptor from 'axios-auth-refresh';
 setupAxios(axios, store);
+
+// const refreshAuthLogic = (failedRequest) => {
+// 	console.log('abc');
+// 	axios.post(urlRefreshTokenAdmin).then((tokenRefreshResponse) => {
+// 		console.log({ tokenRefreshResponse });
+// 		store.dispatch({
+// 			type: 'LOGIN',
+// 			payload: {
+// 				token: tokenRefreshResponse.data.token,
+// 				refreshToken: tokenRefreshResponse.data.refreshToken,
+// 			},
+// 		});
+// 		failedRequest.response.config.headers['Authorization'] =
+// 			'Bearer ' + tokenRefreshResponse.data.token;
+// 		return Promise.resolve();
+// 	});
+// };
+// createAuthRefreshInterceptor(axios, refreshAuthLogic);
 
 ReactDOM.render(
 	<React.StrictMode>

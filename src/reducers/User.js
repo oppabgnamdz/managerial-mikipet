@@ -2,6 +2,7 @@ const initUser = {
 	token: undefined,
 	name: '',
 	position: undefined,
+	refreshToken: undefined,
 };
 
 export default function User(state = initUser, action) {

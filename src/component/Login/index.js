@@ -32,22 +32,25 @@ export default function Index() {
 			account,
 			password,
 		});
-		console.log(response.data);
+		console.log(
+			'🚀 ~ file: index.js ~ line 35 ~ handleSubmit ~ response',
+			response.data
+		);
 		if (response.data === 'Dont have admin') {
 			notification.current.notificationAlert(options);
 			return;
 		}
-	
-		console.log(response.data.position);
+
 		dispatch({
 			type: 'LOGIN',
 			payload: {
 				token: response.data.token,
+				refreshToken: response.data.refreshToken,
 				name: account,
 				position: response.data.position ? response.data.position : 'admin',
 			},
 		});
-		
+
 		authentication.onAuthentication();
 
 		axios.interceptors.request.use(

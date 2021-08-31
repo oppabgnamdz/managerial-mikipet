@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 
 export function SecuredRoute(props) {
 	const user = useSelector((state) => state.user);
-	console.log('🚀 ~ file: SecretRoute.js ~ line 7 ~ SecuredRoute ~ user', user);
 
 	return (
 		<Route
