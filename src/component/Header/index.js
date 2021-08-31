@@ -120,6 +120,7 @@ export default function Header() {
 			account: user.name,
 			password: newPassword,
 		});
+		dispatch({ type: 'LOGOUT' });
 
 		history.push('/');
 	};
@@ -154,15 +155,19 @@ export default function Header() {
 					>
 						<CgProfile className="icon-user" />
 					</a>
-					<a
-						onClick={() => {
-							setIsOpen2(true);
-						}}
-						className="header__statistic-link"
-						href="#"
-					>
-						<FiUserPlus className="icon-user" />
-					</a>
+					{user.position === 'admin' ? (
+						<a
+							onClick={() => {
+								setIsOpen2(true);
+							}}
+							className="header__statistic-link"
+							href="#"
+						>
+							<FiUserPlus className="icon-user" />
+						</a>
+					) : (
+						<></>
+					)}
 
 					<Link
 						onClick={() => {
@@ -274,34 +279,32 @@ export default function Header() {
 							></input>
 							<span style={{ color: 'red' }}>{errorCurrentPassword}</span>
 						</div>
-						{user.position !== 'admin' ? (
-							<div></div>
-						) : (
-							<div>
-								<div className="update-password">
-									<label for="account">New password</label>
-									<input
-										onChange={(e) => {
-											setNewPassword(e.target.value);
-										}}
-										type="password"
-										id="account"
-										placeholder="Enter account name  "
-									></input>
-								</div>
-								<div className="update-password">
-									<label for="account">Confirm new password</label>
-									<input
-										onChange={(e) => {
-											setConfirmNewPassword(e.target.value);
-										}}
-										type="password"
-										id="account"
-										placeholder="Enter password name "
-									></input>
-									<span style={{ color: 'red' }}>{error}</span>
-								</div>
-								{/* <select
+
+						<div>
+							<div className="update-password">
+								<label for="account">New password</label>
+								<input
+									onChange={(e) => {
+										setNewPassword(e.target.value);
+									}}
+									type="password"
+									id="account"
+									placeholder="Enter account name  "
+								></input>
+							</div>
+							<div className="update-password">
+								<label for="account">Confirm new password</label>
+								<input
+									onChange={(e) => {
+										setConfirmNewPassword(e.target.value);
+									}}
+									type="password"
+									id="account"
+									placeholder="Enter password name "
+								></input>
+								<span style={{ color: 'red' }}>{error}</span>
+							</div>
+							{/* <select
 									id="mySelect"
 									value={position}
 									onChange={handleChangeValue}
@@ -313,8 +316,8 @@ export default function Header() {
 									<option value="admin-post">admin-post</option>
 									<option value="admin-user">admin-user</option>
 								</select> */}
-							</div>
-						)}
+						</div>
+
 						<div className="cover-submit">
 							<button type="submit" className="link-submit">
 								<span></span>
