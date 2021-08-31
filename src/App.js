@@ -15,13 +15,13 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 function App() {
 	const user = useSelector((state) => state.user);
-
+	console.log({ user });
 	return (
 		<Router>
 			<Switch>
 				<SecuredRoute exact path="/home" component={Home}></SecuredRoute>
 				<Route exact path="/">
-					{user.token ? (
+					{user.name ? (
 						<Redirect to={{ pathname: '/home' }}></Redirect>
 					) : (
 						<Login />

@@ -48,6 +48,7 @@ export default function Header() {
 	const reRender = useSelector((state) => state.reRender);
 	const loading = useSelector((state) => state.loading);
 	const user = useSelector((state) => state.user);
+	console.log('🚀 ~ file: index.js ~ line 51 ~ Header ~ user', user.position);
 
 	const [modalIsOpen, setIsOpen] = useState(false);
 	const [modalIsOpen2, setIsOpen2] = useState(false);

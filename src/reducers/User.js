@@ -8,7 +8,7 @@ const initUser = {
 export default function User(state = initUser, action) {
 	switch (action.type) {
 		case 'LOGIN': {
-			return { ...action.payload };
+			return { ...state, ...action.payload };
 		}
 		case 'LOGOUT': {
 			return initUser;
